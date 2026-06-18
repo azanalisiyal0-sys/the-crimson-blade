@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Crimson Blade/characters</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+
+    <!-- For a modern transparent PNG favicon -->
+    <link rel="icon" type="image/png" href="assets/images/icons/favicon-32x32.png">
+
+    <!-- Optional: For older browser fallback support (using an .ico file) -->
+    <link rel="shortcut icon" href="assets/images/icons/favicon.ico" type="image/x-icon">
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PFELYLQFL1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-PFELYLQFL1');
+    </script>
+
+</head>
+<body>
+    
+    <audio id="bg-music" loop src="assets/audio/samurai-ambient.mp3"></audio>
+
+    <div class="hero-bg characters-bg">
+        <canvas id="leaves-canvas"></canvas>
+
+        <header class="navbar">
+            <div class="logo">紅 / SAMURAI</div>
+            <nav class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="story.html">Story</a>
+                <a href="chapters.html">Chapters</a>
+                <a href="characters.html">Characters</a>
+            </nav>
+
+            <button id="theme-toggle">
+                <span class="sun">☀️</span>
+                <span class="moon">🌙</span>
+            </button>
+        </header>
+
+        <main class="content-container characters-layout">
+            
+            <!-- Left Side: Interactive Character Selector Rows -->
+            <section class="character-menu-box">
+                <h1 class="page-main-title">Dramatis Personae</h1>
+                <div class="character-rows">
+                    
+                    <!-- Row 1: Kenji -->
+                    <div class="char-row" data-name="Kenji, The Crimson Blade" data-image="assets/images/characters/kenji.jpg" 
+                         data-p1="A scarred, weary Ronin carrying the crushing guilt of a broken oath. He is practical, quiet, and ruthless when pushed."
+                         data-p2="Once a proud samurai, Kenji was forced into exile after his clan was destroyed from within. He now wanders the winter wastes wielding the 'Crimson Blade'—a legendary katana with a rusted guard and a dark, blood-soaked history. He fights not for glory, but to outrun the ghosts of his past.">
+                        <span class="char-id">01 //</span> <span class="char-name">KENJI</span>
+                    </div>
+
+                    <!-- Row 2: Tomoe -->
+                    <div class="char-row" data-name="Lady Tomoe" data-image="assets/images/characters/tomoe.jpg" 
+                         data-p1="A fiercely intelligent and observant physician's daughter. Guarded and resilient, she refuses to be a victim."
+                         data-p2="After Lord Kurada’s forces slaughtered her family and destroyed her village, Tomoe fled with nothing but her medical kit. She crossed paths with a wounded Kenji in the snow. Bound by a mutual need for survival and unspoken emotional tension, she now travels with him, acting as his conscience.">
+                        <span class="char-id">02 //</span> <span class="char-name">TOMOE</span>
+                    </div>
+
+                    <!-- Row 3: Kurada -->
+                    <div class="char-row" data-name="Lord Kurada" data-image="assets/images/characters/lord-kurada.jpg" 
+                         data-p1="A cold, calculating magistrate who rules the province with an iron fist and bureaucratic cruelty."
+                         data-p2="Kurada is a tyrant who views human lives as simple tallies on a ledger. He seeks absolute control over the region and is obsessed with reclaiming the Crimson Blade—a symbol of ultimate martial authority. He doesn't chase his enemies himself; he sends waves of highly trained hunters to do it.">
+                        <span class="char-id">03 //</span> <span class="char-name">LORD KURADA</span>
+                    </div>
+
+                    <!-- Row 4: Kazuma -->
+                    <div class="char-row" data-name="Commander Kazuma" data-image="assets/images/characters/traitor.jpg" 
+                         data-p1="A ruthless commander of Kurada’s personal guard and Kenji’s former brother-in-arms."
+                         data-p2="Kazuma once stood shoulder-to-shoulder with Kenji under the same master. However, when the war turned, Kazuma traded his honor and his brothers' lives for wealth and status under Lord Kurada. He knows Kenji’s fighting style perfectly, making him the most dangerous man on Kenji’s trail.">
+                        <span class="char-id">04 //</span> <span class="char-name">KAZUMA</span>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Right Side Hidden Panel (Slides out dynamically on click) -->
+            <aside class="character-profile-drawer" id="profile-drawer">
+                <button class="close-drawer-btn" id="close-drawer">✕</button>
+                
+                <div class="drawer-scroll-box">
+                    <div class="drawer-image-frame">
+                        <img src="" id="drawer-img" alt="Character Artwork">
+                    </div>
+                    <h2 class="drawer-title" id="drawer-title">Character Name</h2>
+                    <div class="drawer-bio">
+                        <p id="drawer-p1">First paragraph bio context details go here dynamically via scripts...</p>
+                        <p id="drawer-p2">Second paragraph story details render right below here seamlessly.</p>
+                    </div>
+                </div>
+            </aside>
+
+        </main>
+
+
+    </div>
+
+
+    <script src="js/app.js"></script>
+</body>
+</html>
