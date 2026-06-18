@@ -1,0 +1,738 @@
+:root {
+  --bg-card: rgba(255, 255, 255, 0.85);
+  --border-card: rgba(255, 255, 255, 0.5);
+  --text-main: #111111;
+  --text-sub: #555555;
+  --accent-crimson: #D11A2A;
+  --glow-effect: none;
+  --btn-support-bg: transparent;
+  --btn-support-text: #111111;
+}
+
+.dark-mode {
+  --bg-card: rgba(10, 10, 10, 0.85);
+  --border-card: rgba(209, 26, 42, 0.4);
+  --text-main: #ffffff;
+  --text-sub: #aaaaaa;
+  --accent-crimson: #ff2a3b; 
+  --glow-effect: 0 0 15px rgba(255, 42, 59, 0.7);
+  --btn-support-bg: #ffffff;
+  --btn-support-text: #111111;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body, html {
+  height: 100%;
+  background-color: #ffffff;
+  color: var(--text-main);
+  overflow-x: hidden;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+.hero-bg {
+  min-height: 100vh;
+  width: 100%;
+  background-attachment: fixed; /* Keeps background anchored seamlessly across page loads */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+#leaves-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; 
+  z-index: 2;
+}
+
+.hero-bg {
+  min-height: 100vh;
+  width: 100%;
+  background: url('../assets/images/cover-bg.png') no-repeat center right;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 1;
+}
+
+.chapters-bg {
+  background: url('../assets/images/chapter-bg-unblurred.png') no-repeat center right;
+  background-size: cover;
+}
+
+.story-bg {
+  background: url('../assets/images/story-bg.png') no-repeat center right;
+  background-size: cover;
+}
+
+.characters-bg {
+  background: url('../assets/images/characters-bg-unblurred.png') no-repeat center right;
+  background-size: cover;
+}
+
+.chapter1-bg {
+  background: url('../assets/images/chapter1-bg.png') no-repeat center right;
+  background-size: cover;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 8%;
+  z-index: 10;
+}
+
+.logo {
+  font-weight: 900;
+  font-size: 1.5rem;
+  letter-spacing: 2px;
+  color: var(--text-main);
+  text-shadow: var(--glow-effect);
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--text-sub);
+  margin: 0 20px;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover, .nav-links a.active {
+  color: var(--accent-crimson);
+  text-shadow: var(--glow-effect);
+}
+
+.btn-back {
+  text-decoration: none;
+  color: var(--text-sub);
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 1px;
+  position: relative;
+  left: 0;
+  /* Smooth transition for the slide animation */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Hover micro-interaction: turns crimson and slides slightly left */
+.btn-back:hover {
+  color: var(--accent-crimson);
+  left: -5px;
+  text-shadow: var(--glow-effect);
+}
+
+
+/* Modern Theme Toggle Button Container */
+#theme-toggle {
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  width: 35px;
+  height: 35px;
+  border-radius: 50%; /* Perfect circle */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--glow-effect);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Hover micro-interaction */
+#theme-toggle:hover {
+  transform: scale(1.08);
+}
+
+/* Shared Icon Styles */
+#theme-toggle .sun,
+#theme-toggle .moon {
+  font-size: 1.25rem;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Smooth transition for fade, rotation, and scaling */
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), 
+              opacity 0.4s ease;
+}
+
+/* --- LIGHT MODE STATE (Default) --- */
+/* Sun is fully visible and in normal position */
+#theme-toggle .sun {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+/* Moon is hidden, shrunk, and rotated out of frame */
+#theme-toggle .moon {
+  opacity: 0;
+  transform: rotate(-90deg) scale(0);
+}
+
+/* --- DARK MODE STATE --- */
+/* Hide the sun: spins and shrinks away */
+.dark-mode #theme-toggle .sun {
+  opacity: 0;
+  transform: rotate(90deg) scale(0);
+}
+
+/* Reveal the moon: spins inward from the shadows and scales up */
+.dark-mode #theme-toggle .moon {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+
+.content-container {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  padding: 0 8% 50px 8%;
+  flex-grow: 1;
+  align-items: center;
+}
+
+.reader-box {
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 50px;
+  border-radius: 16px;
+  border: 1px solid var(--border-card);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05), var(--glow-effect);
+  max-width: 650px;
+  transition: all 0.5s ease;
+}
+
+.chapter-meta {
+  color: var(--accent-crimson);
+  font-weight: 800;
+  letter-spacing: 3px;
+  font-size: 0.85rem;
+  margin-bottom: 10px;
+  text-shadow: var(--glow-effect);
+}
+
+.story-title {
+  font-size: 3rem;
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: 5px;
+  color: var(--text-main);
+  text-shadow: var(--glow-effect);
+}
+
+.subtitle {
+  color: var(--text-sub);
+  font-style: italic;
+  margin-bottom: 30px;
+}
+
+.story-text {
+  max-height: 250px;
+  overflow-y: auto;
+  padding-right: 15px;
+  margin-bottom: 35px;
+  line-height: 1.8;
+  color: var(--text-main);
+  font-size: 1.05rem;
+}
+
+.story-text::-webkit-scrollbar { width: 4px; }
+.story-text::-webkit-scrollbar-thumb {
+  background: var(--accent-crimson);
+  border-radius: 10px;
+}
+
+.story-text p.dropcap::first-letter {
+  font-size: 3.5rem;
+  font-weight: 900;
+  float: left;
+  line-height: 0.8;
+  padding-right: 8px;
+  color: var(--accent-crimson);
+  text-shadow: var(--glow-effect);
+}
+
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+}
+
+.btn-next {
+  background: var(--accent-crimson);
+  color: white;
+  border: none;
+  padding: 15px 35px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: var(--glow-effect);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-bookmark {
+  background: var(--text-main);
+  color: var(--bg-card);
+  border: none;
+  padding: 15px 25px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Container Box Custom Adjustments
+.chapter-list-container {
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  padding: 25px 30px;
+  border-radius: 12px;
+  box-shadow: var(--glow-effect);
+  transition: all 0.4s ease;
+  max-width: 550px;
+  margin-top: 20px;
+} */
+
+/* Remove default list formatting */
+.chapter-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Individual Chapter Row Setup */
+.chapter-list li {
+  margin-bottom: 12px;
+  position: relative;
+}
+
+.chapter-list li:last-child {
+  margin-bottom: 0; 
+}
+
+/* Clean, Full-Row Interactive Links */
+.chapter-list li a {
+  display: block;
+  text-decoration: none;
+  color: var(--text-main);
+  font-size: 1.1rem;
+  font-weight: 500;
+  padding: 8px 12px;
+  border-radius: 6px;
+  position: relative;
+  left: 0;  
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.chapter-list li a .ch-num {
+  color: var(--accent-crimson);
+  font-weight: 700;
+  margin-right: 6px;
+  text-shadow: var(--glow-effect);
+  transition: color 0.3s ease;
+}
+
+.chapter-list li a:hover {
+  color: var(--accent-crimson);
+  background: rgba(209, 26, 42, 0.06);
+  padding-left: 20px; 
+}
+
+.dark-mode .chapter-list li a:hover {
+  background: rgba(255, 42, 59, 0.1);
+}
+
+.chapter-list li a::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 15%;
+  height: 70%;
+  width: 3px;
+  background-color: var(--accent-crimson);
+  opacity: 0;
+  transform: scaleY(0);
+  transition: all 0.3s ease;
+}
+
+.chapter-list li a:hover::before {
+  opacity: 1;
+  transform: scaleY(1);
+}
+
+/* Slider Parent Container Architecture */
+.slider-layout {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  width: 100%;
+  padding-bottom: 40px;
+}
+
+/* Horizontal track holding individual pages side-by-side */
+.slider-viewport {
+  display: flex;
+  flex-direction: row;
+  width: 100vw;
+  overflow-x: auto;
+  overflow-y: hidden;
+  /* Enables magnetic snapping to ensure a clean flipbook stop point */
+  scroll-snap-type: x mandatory; 
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Hide standard desktop scrollbars to keep visual layout clean */
+.slider-viewport::-webkit-scrollbar {
+  display: none;
+}
+
+/* Full Width Structural Slide Blocks */
+.slide-pane {
+  flex: 0 0 100vw;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  scroll-snap-align: center;
+  padding: 0 5%;
+}
+
+/* Re-adjust Reader box parameters so they expand neatly on each slide */
+.slider-layout .reader-box {
+  width: 100%;
+  max-width: 650px;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* --- CONTROLLER BUTTON TOOLBAR --- */
+.slider-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 650px;
+  margin-top: 25px;
+  padding: 0 10px;
+  z-index: 5;
+}
+
+.slider-btn {
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  color: var(--text-main);
+  padding: 10px 20px;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: var(--glow-effect);
+  transition: all 0.3s ease;
+}
+
+.slider-btn:hover:not(:disabled) {
+  background: var(--accent-crimson);
+  color: #ffffff;
+  border-color: var(--accent-crimson);
+}
+
+.slider-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.page-indicator {
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--text-main);
+  text-shadow: var(--glow-effect);
+  font-size: 1.05rem;
+}
+
+/* Layout and Grid alignment for Character views */
+.characters-layout {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  padding: 0 8% 50px 8%;
+  flex-grow: 1;
+  align-items: center;
+  position: relative;
+}
+
+.page-main-title {
+  font-size: 1.5rem;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--accent-crimson);
+  margin-bottom: 40px;
+  font-weight: 800;
+  text-shadow: var(--glow-effect);
+}
+
+.character-menu-box {
+  max-width: 500px;
+}
+
+/* --- THE CLICKABLE ROW DESIGN --- */
+.character-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.char-row {
+  display: flex;
+  align-items: center;
+  padding: 20px 25px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.char-id {
+  font-weight: 800;
+  color: var(--accent-crimson);
+  margin-right: 15px;
+  font-size: 1.1rem;
+  text-shadow: var(--glow-effect);
+}
+
+.char-name {
+  font-weight: 900;
+  font-size: 1.4rem;
+  letter-spacing: 2px;
+  color: var(--text-main);
+}
+
+/* Hover effects for rows */
+.char-row:hover {
+  transform: translateX(10px);
+  border-color: var(--accent-crimson);
+  box-shadow: var(--glow-effect);
+  background: rgba(209, 26, 42, 0.05);
+}
+
+.dark-mode .char-row:hover {
+  background: rgba(255, 42, 59, 0.1);
+}
+
+/* Active Highlight state when clicked */
+.char-row.is-active {
+  border-color: var(--accent-crimson);
+  background: var(--accent-crimson);
+  box-shadow: var(--glow-effect);
+}
+.char-row.is-active .char-name,
+.char-row.is-active .char-id {
+  color: #ffffff;
+  text-shadow: none;
+}
+
+/* --- THE SLIDING PANEL DRAWER --- */
+.character-profile-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 450px;
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-left: 1px solid var(--border-card);
+  padding: 40px;
+  box-shadow: -10px 0 40px rgba(0, 0, 0, 0.05);
+  z-index: 100;
+  
+  /* CRUCIAL: Pushes it completely off-screen to the right by default */
+  transform: translateX(100%);
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Dark mode panel adjustment */
+.dark-mode .character-profile-drawer {
+  background: rgba(10, 10, 10, 0.85);
+  box-shadow: -10px 0 40px rgba(255, 42, 59, 0.1);
+}
+
+/* Triggers when panel is opened via JS */
+.character-profile-drawer.open {
+  transform: translateX(0);
+}
+
+.close-drawer-btn {
+  position: absolute;
+  top: 25px;
+  right: 25px;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--text-main);
+  cursor: pointer;
+  transition: color 0.3s ease;
+  z-index: 10;
+}
+.close-drawer-btn:hover {
+  color: var(--accent-crimson);
+}
+
+.drawer-scroll-box {
+  height: 100%;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+.drawer-scroll-box::-webkit-scrollbar { width: 4px; }
+.drawer-scroll-box::-webkit-scrollbar-thumb { background: var(--accent-crimson); border-radius: 4px; }
+
+.drawer-image-frame {
+  width: 100%;
+  /* FIXED: Tells the height to calculate dynamically based on a portrait 2:3 ratio */
+  aspect-ratio: 2 / 3; 
+  max-height: 450px; /* Safety fallback block limit */
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 25px;
+  border: 1px solid var(--border-card);
+  box-shadow: var(--glow-effect);
+}
+
+.drawer-image-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; 
+  /* Shift camera anchoring upwards to prioritize character faces over torso details */
+  object-position: top center; 
+}
+
+
+.drawer-title {
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: var(--text-main);
+  margin-bottom: 20px;
+  text-shadow: var(--glow-effect);
+}
+
+.drawer-bio p {
+  font-size: 1.02rem;
+  line-height: 1.8;
+  color: var(--text-main);
+  margin-bottom: 15px;
+}
+
+/* Container adjustment to manage multiple interaction items */
+.button-group {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+/* Premium Discord Action Button Style */
+.btn-discord {
+  background-color: #5865F2; /* Official Discord Blurple */
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1rem;
+  padding: 15px 30px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(88, 101, 242, 0.2);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Inline Discord Icon Scaler */
+.discord-icon {
+  width: 20px;
+  height: 20px;
+  fill: currentColor; /* Inherits text color so it remains crisp white */
+}
+
+/* Hover Micro-interaction: Brightens and lifts slightly */
+.btn-discord:hover {
+  background-color: #4752C4; /* Darker variant for interactive feedback */
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(88, 101, 242, 0.5);
+}
+
+/* Mobile responsive alignment tracking overrides */
+@media (max-width: 768px) {
+  .button-group {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .btn-discord, .btn-go-back {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+
+/* --- FULLSCREEN LANDSCAPE FORCE OVERLAY --- */
+#rotate-device-overlay {
+  display: none; /* Hidden by default */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #111111; /* Dark theme background matches your niche */
+  color: #ffffff;
+  z-index: 99999; /* Higher than everything else on your page */
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+}
+
+.overlay-content h2 {
+  color: var(--accent-crimson) !important;
+  font-weight: 900;
+  margin: 15px 0 10px 0;
+}
+
+.rotate-icon {
+  font-size: 3rem;
+  animation: spinSmooth 2s infinite linear;
+}
+
+@keyframes spinSmooth {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* TARGET MOBILES ONLY IN PORTRAIT (VERTICAL) MODE */
+@media (max-width: 992px) and (orientation: portrait) {
+  #rotate-device-overlay {
+    display: flex; /* Forces the block to reveal itself and guard the UI */
+  }
+}
+
+
+
+
